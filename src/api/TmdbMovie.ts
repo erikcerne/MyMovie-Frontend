@@ -3,7 +3,7 @@ import type { TmdbMovieDto, TmdbReviewsDto } from "../Types";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
-
+  
 export const upcomingMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "upcoming"],
@@ -66,7 +66,7 @@ export const movieReviewsQuery = (id: number) =>
       const res = await fetch(`${API_BASE_URL}/movie/${id}/reviews`);
       if (!res.ok) throw new Error("Kunde inte hämta recensioner");
       const data = await res.json();
-      return data.results; 
+      return data.results;
     },
     enabled: !!id,
   });

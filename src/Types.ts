@@ -1,23 +1,23 @@
 export type TmdbMovieDto = {
   id: number;
-  originalTitle: string;
+  original_title: string;
   overview: string;
-  backdropPath: string | null;
-  posterPath: string | null;
-  releaseDate: string;
+  backdrop_path: string | null;
+  poster_path: string | null;
+  release_date: string;
   popularity: number;
-  voteAverage: number;
-  genreIds: number[];
+  vote_average: number;
+  genre_ids: number[];
 };
 
 export type AuthorDetails = {
-    name: string;
-    username: string;
-    rating: string;
-}
+  name: string;
+  username: string;
+  rating: string;
+};
 
 export type TmdbReviewsDto = {
-    content: string;
-    createdAt: string;
-    authorDetails: AuthorDetails;
-}
+  content: string;
+  createdAt: string;
+  authorDetails: AuthorDetails;
+};
