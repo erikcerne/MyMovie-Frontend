@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { TmdbMovieDto, TmdbReviewsDto } from "../types";
+import type { TmdbMovieDto, TmdbReviewsDto } from "../Types";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
