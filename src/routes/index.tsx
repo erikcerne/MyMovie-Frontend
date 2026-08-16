@@ -13,9 +13,8 @@ function RouteComponent() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-6">Hello "/Index"!</h1>
-
-      <MovieBord queryFn={upcomingMoviesQuery} />
-      <MovieBord queryFn={trendingMoviesQuery} />
+      <MovieBord queryFn={upcomingMoviesQuery} title="Upcoming Movies" />
+      <MovieBord queryFn={trendingMoviesQuery} title="Trending Movies" />
     </div>
   );
 }
