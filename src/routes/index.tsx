@@ -2,8 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { MovieBord } from "../features/MovieBord";
 
-import { trendingMoviesQuery, upcomingMoviesQuery } from "../api/TmdbMovie";
+import {
+  nowPlayingMoviesQuery,
+  topRatedMoviesQuery,
+  upcomingMoviesQuery,
+} from "../api/TmdbMovie";
 import { FullMovieBord } from "../features/FullMovieBord";
+import { Footer } from "../components/Footer";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -15,7 +20,9 @@ function RouteComponent() {
     <div>
       <FullMovieBord />
       <MovieBord queryFn={upcomingMoviesQuery} title="Upcoming" />
-      <MovieBord queryFn={trendingMoviesQuery} title="Trending" />
+      <MovieBord queryFn={nowPlayingMoviesQuery} title="Now Playing" />
+      <MovieBord queryFn={topRatedMoviesQuery} title="Top Rated" />
+      <Footer />
     </div>
   );
 }

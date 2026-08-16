@@ -70,3 +70,15 @@ export const movieReviewsQuery = (id: number) =>
     },
     enabled: !!id,
   });
+
+  export const SimilarMoviesQuery = (id: number) =>
+  queryOptions({
+    queryKey: ["movie", "similar", id],
+    queryFn: async (): Promise<TmdbMovieDto[]> => {
+      const res = await fetch(`${API_BASE_URL}/movie/${id}/similar`);
+      if (!res.ok) throw new Error("Kunde inte hämta liknande filmer");
+      const data = await res.json();
+      return data.results;
+    },
+    enabled: !!id,
+  });

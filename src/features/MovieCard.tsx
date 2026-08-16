@@ -10,23 +10,15 @@ export const MovieCard = ({ movie }: { movie: TmdbMovieDto }) => {
 
   return (
     <div className="group w-36 sm:w-44 md:w-52 flex-shrink-0 snap-start">
-      <a href={`/movie/${movie.id}`} className="block">{/* plasholder */}
+      <a href={`/movie/${movie.id}`} className="block">
         <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-base-300 shadow-md">
-          {movie.poster_path ? (
-            <>
-              <img
-                src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
-                alt={movie.original_title}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 will-change-transform"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            </>
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-base-200 text-sm text-gray-500">
-              Ingen bild
-            </div>
-          )}
+          <img
+            src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
+            alt={movie.original_title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 will-change-transform"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
       </a>
 

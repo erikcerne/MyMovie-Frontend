@@ -18,6 +18,6 @@ export type AuthorDetails = {
 
 export type TmdbReviewsDto = {
   content: string;
-  createdAt: string;
-  authorDetails: AuthorDetails;
+  created_at: string;
+  author_details: AuthorDetails;
 };

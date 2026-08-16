@@ -6,21 +6,6 @@ export const Header = () => {
       <a href="#" className="group relative z-10 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 text-primary transition-transform duration-300 group-hover:scale-105">
           <img src={MyMovieIcon} alt="MyMovie Icon" />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polygon points="12 2 2 7 12 12 22 7 12 2" />
-            <polyline points="2 17 12 22 22 17" />
-            <polyline points="2 12 12 17 22 12" />
-          </svg>
         </div>
         <span className="text-xl font-bold text-base-content md:text-2xl">
           MyMovies
@@ -29,7 +14,7 @@ export const Header = () => {
 
       <nav className="relative z-10 hidden items-center gap-2 md:flex">
         <a
-          href="#"
+          href={`/`}
           className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
         >
           <svg

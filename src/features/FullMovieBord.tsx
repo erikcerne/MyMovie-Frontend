@@ -1,11 +1,10 @@
-// FullMovieBord.tsx
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { TmdbMovieDto } from "../Types";
 import { trendingMoviesQuery } from "../api/TmdbMovie";
 import { FullMovieCard } from "./FullMovieCard";
 
-const AUTOPLAY_INTERVAL = 15000;
+const AUTOPLAY_INTERVAL = 10000;
 
 export const FullMovieBord = () => {
   const { data, isPending, isError, error } = useQuery(trendingMoviesQuery());
@@ -75,6 +74,5 @@ export const FullMovieBord = () => {
       )}
       <div className="h-20"></div>
     </div>
-    
   );
 };
