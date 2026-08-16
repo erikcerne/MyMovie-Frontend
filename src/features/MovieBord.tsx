@@ -49,8 +49,8 @@ export const MovieBord = ({ title, queryFn }: MovieBordProps) => {
   }
 
   return (
-    <div>
-      <div className="mb-5 flex items-center justify-between gap-4 px-4 sm:px-0">
+    <div className="w-[75%] mx-auto ">
+      <div className="mb-5 flex items-center justify-between gap-4 px-4 sm:px-0 margin-top-50px">
         <h2 className="min-w-0 truncate text-xl font-semibold text-base-content md:text-2xl">
           {title}
         </h2>

@@ -12,4 +12,12 @@ export default {
     extend: {},
   },
   plugins: [daisyui],
+  daisyui: {
+    themes: ["black"],
+    darkTheme: "black",
+    base: true,
+    styled: true,
+    utils: true,
+    logs: false,
+  },
 };

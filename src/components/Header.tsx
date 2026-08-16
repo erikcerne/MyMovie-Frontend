@@ -2,7 +2,7 @@ import MyMovieIcon from "../assets/movie-icon-7.png";
 
 export const Header = () => {
   return (
-    <header className="relative mx-auto flex h-[68px] w-[60%] items-center justify-between bg-transparent md:h-[80px]">
+    <header className="relative mx-auto flex h-[68px] w-[75%] items-center justify-between bg-transparent md:h-[80px]">
       <a href="#" className="group relative z-10 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 text-primary transition-transform duration-300 group-hover:scale-105">
           <img src={MyMovieIcon} alt="MyMovie Icon" />
