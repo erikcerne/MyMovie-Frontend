@@ -1,3 +1,4 @@
+import { Star } from "../components/Star";
 import type { TmdbMovieDto } from "../Types";
 
 const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w342";
@@ -29,20 +30,7 @@ export const MovieCard = ({ movie }: { movie: TmdbMovieDto }) => {
 
         <div className="mt-1.5 flex items-center gap-2 text-xs text-gray-500 leading-none truncate">
           <span className="inline-flex items-center gap-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="fill-primary/80 text-primary"
-            >
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
+            <Star />
             <span className="tabular-nums font-medium">{rating}</span>
           </span>
 
