@@ -56,7 +56,7 @@ export const Header = () => {
         </a>
 
         <a
-          href="#"
+          href="/login"
           className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
         >
           <svg
