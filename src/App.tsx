@@ -15,16 +15,13 @@ declare module "@tanstack/react-router" {
 }
 
 function App() {
-  const { VITE_AUTH0_DOMAIN, VITE_AUTH0_CLIENT_ID, VITE_AUTH0_AUDIENCE } =
-    import.meta.env;
-
   return (
     <Auth0Provider
-      domain={VITE_AUTH0_DOMAIN}
-      clientId={VITE_AUTH0_CLIENT_ID}
+      domain={import.meta.env.VITE_AUTH0_DOMAIN}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: VITE_AUTH0_AUDIENCE,
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
       }}
     >
       <QueryClientProvider client={queryClient}>

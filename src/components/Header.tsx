@@ -1,6 +1,22 @@
 import MyMovieIcon from "../assets/movie-icon-7.png";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const Header = () => {
+  const {
+    isLoading, // Loading state, the SDK needs to reach Auth0 on load
+    isAuthenticated,
+    loginWithRedirect: login, // Starts the login flow
+    logout: auth0Logout, // Starts the logout flow
+  } = useAuth0();
+
+  if (isLoading) return "Loading...";
+
+  const signup = () =>
+    login({ authorizationParams: { screen_hint: "signup" } });
+
+  const logout = () =>
+    auth0Logout({ logoutParams: { returnTo: window.location.origin } });
+
   return (
     <header className="relative mx-auto flex h-[68px] w-[75%] items-center justify-between bg-transparent md:h-[80px]">
       <a href="#" className="group relative z-10 flex items-center gap-3">
@@ -55,26 +71,46 @@ export const Header = () => {
           <span className="font-medium">Search</span>
         </a>
 
-        <a
-          href="/login"
-          className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        {!isAuthenticated ? (
+          <>
+            <button
+              type="button"
+              onClick={() => login()}
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
+            >
+              <span className="font-medium">Login</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => signup()}
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
+            >
+              <span className="font-medium">Signup</span>
+            </button>
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={() => logout()}
+            className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
           >
-            <circle cx="12" cy="8" r="5" />
-            <path d="M20 21a8 8 0 0 0-16 0" />
-          </svg>
-          <span className="font-medium">Profile</span>
-        </a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="8" r="5" />
+              <path d="M20 21a8 8 0 0 0-16 0" />
+            </svg>
+            <span className="font-medium">Logout</span>
+          </button>
+        )}
       </nav>
     </header>
   );
