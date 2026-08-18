@@ -1,15 +1,16 @@
 import MyMovieIcon from "../assets/movie-icon-7.png";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "@tanstack/react-router";
 
 export const Header = () => {
   const {
-    isLoading, // Loading state, the SDK needs to reach Auth0 on load
+    isLoading,
     isAuthenticated,
-    loginWithRedirect: login, // Starts the login flow
-    logout: auth0Logout, // Starts the logout flow
+    loginWithRedirect: login,
+    logout: auth0Logout,
   } = useAuth0();
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <div className="p-4">Laddar...</div>;
 
   const signup = () =>
     login({ authorizationParams: { screen_hint: "signup" } });
@@ -19,18 +20,18 @@ export const Header = () => {
 
   return (
     <header className="relative mx-auto flex h-[68px] w-[75%] items-center justify-between bg-transparent md:h-[80px]">
-      <a href="#" className="group relative z-10 flex items-center gap-3">
+      <Link to="/" className="group relative z-10 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 text-primary transition-transform duration-300 group-hover:scale-105">
           <img src={MyMovieIcon} alt="MyMovie Icon" />
         </div>
         <span className="text-xl font-bold text-base-content md:text-2xl">
           MyMovies
         </span>
-      </a>
+      </Link>
 
       <nav className="relative z-10 hidden items-center gap-2 md:flex">
-        <a
-          href={`/`}
+        <Link
+          to="/"
           className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
         >
           <svg
@@ -48,12 +49,9 @@ export const Header = () => {
             <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
           <span className="font-medium">Home</span>
-        </a>
+        </Link>
 
-        <a
-          href="#"
-          className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
-        >
+        <div className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -69,7 +67,7 @@ export const Header = () => {
             <path d="m21 21-4.3-4.3" />
           </svg>
           <span className="font-medium">Search</span>
-        </a>
+        </div>
 
         {!isAuthenticated ? (
           <>
