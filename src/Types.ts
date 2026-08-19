@@ -21,3 +21,22 @@ export type TmdbReviewsDto = {
   created_at: string;
   author_details: AuthorDetails;
 };
+
+export type WatchStatus = 'WATCHED' | 'WANT_TO_WATCH';
+
+export type UserMoviesDto = {
+    content: string;
+    rating: number | null; 
+    tmdbId: number;
+    status: WatchStatus;
+    date: string;          
+    originalTitle: string;
+    posterPath: string;
+    popularity: number;
+}
+
+export type AllUserMoviesDto = {
+    reviewed: UserMoviesDto[];
+    watched: UserMoviesDto[];
+    wantToWatch: UserMoviesDto[];
+}
