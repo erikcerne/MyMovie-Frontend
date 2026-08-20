@@ -3,12 +3,13 @@ import type { TmdbMovieDto, TmdbReviewsDto } from "../Types";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+  
 export const upcomingMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "upcoming"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
       const res = await fetch(`${API_BASE_URL}/movie/upcoming`);
-      if (!res.ok) throw new Error("Kunde inte hämta kommande filmer");
+      if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
     },
@@ -19,7 +20,7 @@ export const trendingMoviesQuery = () =>
     queryKey: ["movies", "trending"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
       const res = await fetch(`${API_BASE_URL}/movie/trending`);
-      if (!res.ok) throw new Error("Kunde inte hämta trendande filmer");
+      if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
     },
@@ -30,7 +31,7 @@ export const topRatedMoviesQuery = () =>
     queryKey: ["movies", "top_rated"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
       const res = await fetch(`${API_BASE_URL}/movie/top_rated`);
-      if (!res.ok) throw new Error("Kunde inte hämta topprankade filmer");
+      if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
     },
@@ -41,7 +42,7 @@ export const nowPlayingMoviesQuery = () =>
     queryKey: ["movies", "nowplaying"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
       const res = await fetch(`${API_BASE_URL}/movie/nowplaying`);
-      if (!res.ok) throw new Error("Kunde inte hämta aktuella biofilmer");
+      if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
     },
@@ -52,7 +53,7 @@ export const movieDetailsQuery = (id: number) =>
     queryKey: ["movie", "details", id],
     queryFn: async (): Promise<TmdbMovieDto> => {
       const res = await fetch(`${API_BASE_URL}/movie/${id}/Details`);
-      if (!res.ok) throw new Error("Kunde inte hämta filmdetaljer");
+      if (!res.ok) throw new Error("Could not retrieve movies");
       return res.json();
     },
     enabled: !!id,
@@ -63,7 +64,7 @@ export const movieReviewsQuery = (id: number) =>
     queryKey: ["movie", "reviews", id],
     queryFn: async (): Promise<TmdbReviewsDto[]> => {
       const res = await fetch(`${API_BASE_URL}/movie/${id}/reviews`);
-      if (!res.ok) throw new Error("Kunde inte hämta recensioner");
+      if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
     },
@@ -75,7 +76,7 @@ export const SimilarMoviesQuery = (id: number) =>
     queryKey: ["movie", "similar", id],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
       const res = await fetch(`${API_BASE_URL}/movie/${id}/similar`);
-      if (!res.ok) throw new Error("Kunde inte hämta liknande filmer");
+      if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
     },

@@ -1,7 +1,8 @@
 import { Star } from "../components/Star";
 import type { TmdbMovieDto } from "../Types";
 
-const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w342";
+const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_POSTER;
+
 
 export const MovieCard = ({ movie }: { movie: TmdbMovieDto }) => {
   const releaseYear = movie.release_date

@@ -3,6 +3,8 @@ import { movieDetailsQuery } from "../api/tmdbMovie";
 import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 
+const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP;
+
 export const BackdropPoster = ({ movieid }: { movieid: string }) => {
   const movieIdNumber = Number(movieid);
   const { data, isPending, isError, error } = useQuery(
@@ -29,7 +31,7 @@ export const BackdropPoster = ({ movieid }: { movieid: string }) => {
     <div className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={`https://image.tmdb.org/t/p/w1280${data?.backdrop_path}`}
+          src={`${TMDB_IMAGE_BASE_URL}${data?.backdrop_path}`}
           alt={data?.original_title}
           className="h-full w-full object-cover"
           loading="lazy"

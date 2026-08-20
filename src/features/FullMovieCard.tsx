@@ -2,12 +2,14 @@ import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 import type { TmdbMovieDto } from "../Types";
 
+const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP;
+
 export const FullMovieCard = ({ movie }: { movie: TmdbMovieDto }) => {
   return (
     <div className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
+          src={`${TMDB_IMAGE_BASE_URL}${movie.backdrop_path}`}
           alt={movie.original_title}
           className="h-full w-full object-cover"
           loading="lazy"
