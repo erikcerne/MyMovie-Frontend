@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { movieDetailsQuery } from "../api/TmdbMovie";
+import { movieDetailsQuery } from "../api/tmdbMovie";
 import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 

@@ -6,7 +6,7 @@ import {
   nowPlayingMoviesQuery,
   topRatedMoviesQuery,
   upcomingMoviesQuery,
-} from "../api/TmdbMovie";
+} from "../api/tmdbMovie";
 import { FullMovieBord } from "../features/FullMovieBord";
 import { Footer } from "../components/Footer";
 

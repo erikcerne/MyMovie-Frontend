@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { TmdbMovieDto } from "../Types";
-import { trendingMoviesQuery } from "../api/TmdbMovie";
+import { trendingMoviesQuery } from "../api/tmdbMovie";
 import { FullMovieCard } from "./FullMovieCard";
 
 const AUTOPLAY_INTERVAL = 10000;
