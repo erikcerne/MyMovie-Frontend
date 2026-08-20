@@ -10,7 +10,7 @@ export const Header = () => {
     logout: auth0Logout,
   } = useAuth0();
 
-  if (isLoading) return <div className="p-4">Laddar...</div>;
+  if (isLoading) return <div className="p-4">Loadin...</div>;
 
   const signup = () =>
     login({ authorizationParams: { screen_hint: "signup" } });
@@ -113,20 +113,6 @@ export const Header = () => {
             onClick={() => logout()}
             className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="12" cy="8" r="5" />
-              <path d="M20 21a8 8 0 0 0-16 0" />
-            </svg>
             <span className="font-medium">Logout</span>
           </button>
         )}
