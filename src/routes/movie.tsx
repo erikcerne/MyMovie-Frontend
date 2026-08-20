@@ -8,7 +8,7 @@ import { Footer } from "../components/Footer";
 import { useState } from "react";
 import { Reviews } from "../features/Reviews";
 
-export const Route = createFileRoute("/movie/$movieId")({
+export const Route = createFileRoute("/movie")({
   component: RouteComponent,
 });
 
