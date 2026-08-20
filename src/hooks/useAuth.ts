@@ -15,14 +15,17 @@ export const useAuth = () => {
   } = useAuth0();
 
   const [needsUsername, setNeedsUsername] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkExistingUser = async () => {
+    const init = async () => {
       if (isAuthenticated) {
         try {
-          const token = await getAccessTokenSilently();
+          const accessToken = await getAccessTokenSilently();
+          setToken(accessToken);
+
           const res = await fetch(`${API_BASE_URL}/isExistingUser`, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${accessToken}` },
           });
           const exists: boolean = await res.json();
 
@@ -34,8 +37,8 @@ export const useAuth = () => {
         }
       }
     };
-
-    checkExistingUser();
+    
+    init();
   }, [isAuthenticated, getAccessTokenSilently]);
 
   return {
@@ -46,6 +49,7 @@ export const useAuth = () => {
     user,
     isLoading,
     getAccessTokenSilently,
+    token,
     needsUsername,
     setNeedsUsername,
   };
