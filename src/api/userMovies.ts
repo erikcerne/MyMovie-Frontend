@@ -5,8 +5,7 @@ import {
 } from "@tanstack/react-query";
 import type { AddRatingDto, AllUserMoviesDto } from "../Types";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useAddReviewMutation = (token: string) => {
   const queryClient = useQueryClient();
@@ -40,7 +39,6 @@ export const allUserMoviesQuery = (token: string) =>
     },
     enabled: !!token,
   });
-
 
 export const useAddWatchedMutation = (token: string) => {
   const queryClient = useQueryClient();
