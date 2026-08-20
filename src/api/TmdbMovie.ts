@@ -3,7 +3,6 @@ import type { TmdbMovieDto, TmdbReviewsDto } from "../Types";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
-  
 export const upcomingMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "upcoming"],
@@ -71,7 +70,7 @@ export const movieReviewsQuery = (id: number) =>
     enabled: !!id,
   });
 
-  export const SimilarMoviesQuery = (id: number) =>
+export const SimilarMoviesQuery = (id: number) =>
   queryOptions({
     queryKey: ["movie", "similar", id],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
