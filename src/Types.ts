@@ -40,3 +40,9 @@ export type AllUserMoviesDto = {
     watched: UserMoviesDto[];
     wantToWatch: UserMoviesDto[];
 }
+
+export type AddRatingDto = {
+    content: string;
+    rating: number;
+    tmdbId: number;
+}
