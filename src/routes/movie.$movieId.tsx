@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BackdropPoster } from "../features/BackdropPoster";
-import { movieReviewsQuery, SimilarMoviesQuery } from "../api/TmdbMovie";
+import { movieReviewsQuery, SimilarMoviesQuery } from "../api/tmdbMovie";
 import { useQuery } from "@tanstack/react-query";
 import type { TmdbMovieDto } from "../Types";
 import { MovieCard } from "../features/MovieCard";
