@@ -7,21 +7,21 @@ export const Footer = () => {
             <div className="text-xl font-bold text-primary">MyMovies</div>
             <h4 className="text-sm text-zinc-400 max-w-2xl">
               This site is a hobby prodject creayted by Erik Cerne. The site
-              uses the TMDB API via my own backend. Vissit the
+              uses the TMDB API via my own backend. Vissit the 
               <a
                 href="https://github.com/erikcerne/MyMovie-Backend"
                 className="text-primary hover:underline"
               >
                 backend
               </a>
-              and
+               and 
               <a
                 href="https://github.com/erikcerne/MyMovie-Frontend"
                 className="text-primary hover:underline"
               >
                 frontend
               </a>
-              repositorys on github to see more.
+               repositorys on github to see more.
             </h4>
             <div className="text-xs text-zinc-500 mt-10s">
               Erik.cerne2@gmail.com
