@@ -7,6 +7,21 @@ import type { AddRatingDto, AllUserMoviesDto } from "../Types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+
+export const allUserMoviesQuery = (token: string) =>
+  queryOptions({
+    queryKey: ["usermovies", "all"],
+    queryFn: async (): Promise<AllUserMoviesDto> => {
+      const res = await fetch(`${API_BASE_URL}/usermovie/get/all`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Could not get youre movies");
+      return res.json();
+    },
+    enabled: !!token,
+  });
+
+  
 export const useAddReviewMutation = (token: string) => {
   const queryClient = useQueryClient();
 
@@ -26,19 +41,6 @@ export const useAddReviewMutation = (token: string) => {
       queryClient.invalidateQueries({ queryKey: ["usermovies"] }),
   });
 };
-
-export const allUserMoviesQuery = (token: string) =>
-  queryOptions({
-    queryKey: ["usermovies", "all"],
-    queryFn: async (): Promise<AllUserMoviesDto> => {
-      const res = await fetch(`${API_BASE_URL}/usermovie/get/all`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error("Could not get youre movies");
-      return res.json();
-    },
-    enabled: !!token,
-  });
 
 export const useAddWatchedMutation = (token: string) => {
   const queryClient = useQueryClient();
@@ -65,7 +67,7 @@ export const useAddWantToWatchMutation = (token: string) => {
 
   return useMutation({
     mutationFn: async (tmdbId: number) => {
-      const res = await fetch(`${API_BASE_URL}/add/want/to/watched`, {
+      const res = await fetch(`${API_BASE_URL}/add/want/to/watch`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
