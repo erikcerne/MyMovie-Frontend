@@ -3,16 +3,15 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import type { AddRatingDto, AllUserMoviesDto } from "../Types";
+import type { AddRatingDto, AddToLibraryDto, AllUserMoviesDto, RegisterUserDto } from "../Types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 
 export const allUserMoviesQuery = (token: string) =>
   queryOptions({
     queryKey: ["usermovies", "all"],
     queryFn: async (): Promise<AllUserMoviesDto> => {
-      const res = await fetch(`${API_BASE_URL}/usermovie/get/all`, {
+      const res = await fetch(`${API_BASE_URL}/users/me/movies`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Could not get youre movies");
@@ -21,13 +20,12 @@ export const allUserMoviesQuery = (token: string) =>
     enabled: !!token,
   });
 
-  
 export const useAddReviewMutation = (token: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (dto: AddRatingDto) => {
-      const res = await fetch(`${API_BASE_URL}/add/revewe`, {
+      const res = await fetch(`${API_BASE_URL}/users/me/movies/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,36 +44,19 @@ export const useAddWatchedMutation = (token: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (tmdbId: number) => {
-      const res = await fetch(`${API_BASE_URL}/add/watched`, {
+    mutationFn: async (movie: AddToLibraryDto) => {
+      const res = await fetch(`${API_BASE_URL}/users/me/movies/library`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(tmdbId),
+        body: JSON.stringify(movie),
       });
-      if (!res.ok) throw new Error("cood sedd");
-    },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["usermovies"] }),
-  });
-};
 
-export const useAddWantToWatchMutation = (token: string) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (tmdbId: number) => {
-      const res = await fetch(`${API_BASE_URL}/add/want/to/watch`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(tmdbId),
-      });
-      if (!res.ok) throw new Error("Could not save");
+      if (!res.ok) {
+        throw new Error("Kunde inte lägga till film");
+      }
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["usermovies"] }),
@@ -84,16 +65,19 @@ export const useAddWantToWatchMutation = (token: string) => {
 
 export const useRegisterUserMutation = (token: string) => {
   return useMutation({
-    mutationFn: async (name: string) => {
-      const res = await fetch(`${API_BASE_URL}/register`, {
+    mutationFn: async (dto: RegisterUserDto) => {
+      const res = await fetch(`${API_BASE_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(name),
+        body: JSON.stringify(dto),
       });
-      if (!res.ok) throw new Error("Could not register username");
+
+      if (!res.ok) {
+        throw new Error("Could not register username");
+      }
     },
   });
 };
