@@ -7,7 +7,7 @@ export const upcomingMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "upcoming"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
-      const res = await fetch(`${API_BASE_URL}/movie/upcoming`);
+      const res = await fetch(`${API_BASE_URL}/movies/upcoming`);
       if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
@@ -18,7 +18,7 @@ export const trendingMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "trending"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
-      const res = await fetch(`${API_BASE_URL}/movie/trending`);
+      const res = await fetch(`${API_BASE_URL}/movies/trending`);
       if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
@@ -29,7 +29,7 @@ export const topRatedMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "top_rated"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
-      const res = await fetch(`${API_BASE_URL}/movie/top_rated`);
+      const res = await fetch(`${API_BASE_URL}/movies/top-rated`);
       if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
@@ -40,7 +40,18 @@ export const nowPlayingMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "nowplaying"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
-      const res = await fetch(`${API_BASE_URL}/movie/nowplaying`);
+      const res = await fetch(`${API_BASE_URL}/movies/now-playing`);
+      if (!res.ok) throw new Error("Could not retrieve movies");
+      const data = await res.json();
+      return data.results;
+    },
+  });
+
+  export const popularMoviesQuery = () =>
+  queryOptions({
+    queryKey: ["movies", "nowplaying"],
+    queryFn: async (): Promise<TmdbMovieDto[]> => {
+      const res = await fetch(`${API_BASE_URL}/movies/popular`);
       if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
@@ -51,7 +62,7 @@ export const movieDetailsQuery = (id: number) =>
   queryOptions({
     queryKey: ["movie", "details", id],
     queryFn: async (): Promise<TmdbMovieDto> => {
-      const res = await fetch(`${API_BASE_URL}/movie/${id}/Details`);
+      const res = await fetch(`${API_BASE_URL}/movies/${id}`);
       if (!res.ok) throw new Error("Could not retrieve movies");
       return res.json();
     },
@@ -62,7 +73,7 @@ export const movieReviewsQuery = (id: number) =>
   queryOptions({
     queryKey: ["movie", "reviews", id],
     queryFn: async (): Promise<TmdbReviewsDto[]> => {
-      const res = await fetch(`${API_BASE_URL}/movie/${id}/reviews`);
+      const res = await fetch(`${API_BASE_URL}/movies/${id}/reviews`);
       if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
@@ -74,7 +85,7 @@ export const SimilarMoviesQuery = (id: number) =>
   queryOptions({
     queryKey: ["movie", "similar", id],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
-      const res = await fetch(`${API_BASE_URL}/movie/${id}/similar`);
+      const res = await fetch(`${API_BASE_URL}/movies/${id}/similar`);
       if (!res.ok) throw new Error("Could not retrieve movies");
       const data = await res.json();
       return data.results;
