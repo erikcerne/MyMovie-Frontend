@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+  import.meta.env.VITE_API_BASE_URL;
 
 export const useAuth = () => {
   const {
@@ -24,7 +24,7 @@ export const useAuth = () => {
           const accessToken = await getAccessTokenSilently();
           setToken(accessToken);
 
-          const res = await fetch(`${API_BASE_URL}/isExistingUser`, {
+          const res = await fetch(`${API_BASE_URL}/users/me/exists`, {
             headers: { Authorization: `Bearer ${accessToken}` },
           });
           const exists: boolean = await res.json();
@@ -37,7 +37,7 @@ export const useAuth = () => {
         }
       }
     };
-    
+
     init();
   }, [isAuthenticated, getAccessTokenSilently]);
 
