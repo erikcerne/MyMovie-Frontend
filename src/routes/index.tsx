@@ -4,6 +4,7 @@ import { MovieBord } from "../features/MovieBord";
 
 import {
   nowPlayingMoviesQuery,
+  popularMoviesQuery,
   topRatedMoviesQuery,
   upcomingMoviesQuery,
 } from "../api/tmdbMovie";
@@ -19,9 +20,10 @@ function RouteComponent() {
   return (
     <div>
       <FullMovieBord />
-      <MovieBord queryFn={upcomingMoviesQuery} title="Upcoming" />
-      <MovieBord queryFn={nowPlayingMoviesQuery} title="Now Playing" />
-      <MovieBord queryFn={topRatedMoviesQuery} title="Top Rated" />
+      <MovieBord queryFn={upcomingMoviesQuery} title="Upcoming Movies" />
+      <MovieBord queryFn={nowPlayingMoviesQuery} title="Now Playing Movies" />
+      <MovieBord queryFn={topRatedMoviesQuery} title="Top Rated Movies" />
+      <MovieBord queryFn={popularMoviesQuery} title="Popular Movies" />
       <Footer />
     </div>
   );
