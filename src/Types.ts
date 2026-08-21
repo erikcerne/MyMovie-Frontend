@@ -47,3 +47,12 @@ export type AddRatingDto = {
   rating: number;
   tmdbId: number;
 };
+
+export type AddToLibraryDto = {
+  watchStatus: WatchStatus;
+  tmdbId: number;
+};
+
+export type RegisterUserDto = {
+  name: string;
+};
