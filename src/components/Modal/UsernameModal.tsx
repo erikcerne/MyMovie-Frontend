@@ -1,36 +1,19 @@
 import { useState } from "react";
-import { useAuth } from "../hooks/useAuth";
-
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
+import { useAuth } from "../../hooks/useAuth";
+import { useRegisterUserMutation } from "../../api/userMovies";
 
 export const UsernameModal = () => {
-  const { needsUsername, setNeedsUsername, getAccessTokenSilently } = useAuth();
+  const { needsUsername, setNeedsUsername, token } = useAuth();
+  const registerUser = useRegisterUserMutation(token ?? "");
   const [name, setName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!needsUsername) return null;
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!name.trim()) return;
-
-    setIsSubmitting(true);
-    try {
-      const token = await getAccessTokenSilently();
-      await fetch(`${API_BASE_URL}/register`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(name),
-      });
-      setNeedsUsername(false);
-    } catch (error) {
-      console.error("Kunde inte registrera användarnamn:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
+    registerUser.mutate(name, {
+      onSuccess: () => setNeedsUsername(false),
+    });
   };
 
   return (
@@ -52,10 +35,10 @@ export const UsernameModal = () => {
         <button
           type="button"
           onClick={handleSubmit}
-          disabled={isSubmitting || !name.trim()}
+          disabled={registerUser.isPending || !name.trim()}
           className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
         >
-          <span>{isSubmitting ? "Saving..." : "Save"}</span>
+          <span>{registerUser.isPending ? "Saving..." : "Save"}</span>
         </button>
       </div>
     </div>

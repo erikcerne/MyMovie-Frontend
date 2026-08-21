@@ -79,3 +79,19 @@ export const useAddWantToWatchMutation = (token: string) => {
       queryClient.invalidateQueries({ queryKey: ["usermovies"] }),
   });
 };
+
+export const useRegisterUserMutation = (token: string) => {
+  return useMutation({
+    mutationFn: async (name: string) => {
+      const res = await fetch(`${API_BASE_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(name),
+      });
+      if (!res.ok) throw new Error("Could not register username");
+    },
+  });
+};
