@@ -1,6 +1,6 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { UsernameModal } from "../components/UsernameModal";
+import { UsernameModal } from "../components/Modal/UsernameModal";
 
 export const Route = createRootRoute({
   component: () => (
