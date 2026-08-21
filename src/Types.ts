@@ -22,27 +22,28 @@ export type TmdbReviewsDto = {
   author_details: AuthorDetails;
 };
 
-export type WatchStatus = 'WATCHED' | 'WANT_TO_WATCH';
+export type WatchStatus = "WATCHED" | "WANT_TO_WATCH";
 
 export type UserMoviesDto = {
-    content: string;
-    rating: number | null; 
-    tmdbId: number;
-    status: WatchStatus;
-    date: string;          
-    originalTitle: string;
-    posterPath: string;
-    popularity: number;
-}
+  content: string;
+  rating: number | null;
+  id: number;
+  status: WatchStatus;
+  date: string;
+  original_title: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+};
 
 export type AllUserMoviesDto = {
-    reviewed: UserMoviesDto[];
-    watched: UserMoviesDto[];
-    wantToWatch: UserMoviesDto[];
-}
+  reviewed: UserMoviesDto[];
+  watched: UserMoviesDto[];
+  want_to_watch: UserMoviesDto[];
+};
 
 export type AddRatingDto = {
-    content: string;
-    rating: number;
-    tmdbId: number;
-}
+  content: string;
+  rating: number;
+  tmdbId: number;
+};
