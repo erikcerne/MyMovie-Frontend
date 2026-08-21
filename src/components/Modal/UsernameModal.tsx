@@ -11,9 +11,13 @@ export const UsernameModal = () => {
 
   const handleSubmit = () => {
     if (!name.trim()) return;
-    registerUser.mutate(name, {
-      onSuccess: () => setNeedsUsername(false),
-    });
+
+    registerUser.mutate(
+      { name },
+      {
+        onSuccess: () => setNeedsUsername(false),
+      },
+    );
   };
 
   return (
@@ -22,6 +26,7 @@ export const UsernameModal = () => {
         <h2 className="text-xl font-black uppercase tracking-[-0.02em] text-white">
           The registration was successful
         </h2>
+
         <p className="mt-2 text-sm text-white/60">Choose your username</p>
 
         <input
