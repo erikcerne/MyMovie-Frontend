@@ -39,13 +39,12 @@ function RouteComponent() {
       {isAuthenticated ? (
         <div>
           <ProfileFullMovieBord/> 
-          <ProfileMovieBord title="Movies you have reviewed" userMoviesDto={reviewed}/>
-          <ProfileMovieBord title="Movies you have seen" userMoviesDto={watched}/>
-          <ProfileMovieBord title="Movies in yore watchlist" userMoviesDto={want_to_watch}/>
+          {reviewed.length > 0 ? (<ProfileMovieBord title="Movies you have reviewed" userMoviesDto={reviewed}/>) : (<></>)}
+          {watched.length > 0 ? (<ProfileMovieBord title="Movies you have seen" userMoviesDto={watched}/>) : (<></>)}
+          {want_to_watch.length > 0 ? (<ProfileMovieBord title="Movies in yore watchlist" userMoviesDto={want_to_watch}/>) : (<></>)}
         </div>
       ) : (
-        <>
-        This is your movie library login to see all your saved movies</>
+        <>This is your movie library login to see all your saved movies</>
       )}
     </>
   );
