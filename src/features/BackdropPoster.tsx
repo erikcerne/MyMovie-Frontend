@@ -4,11 +4,7 @@ import { movieDetailsQuery } from "../api/tmdbMovie";
 import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 import { useAuth } from "../hooks/useAuth";
-import {
-  useAddWatchedMutation,
-  useAddWantToWatchMutation,
-  useAddReviewMutation,
-} from "../api/userMovies";
+import { useAddWatchedMutation, useAddReviewMutation } from "../api/userMovies";
 import { ReviewFormModal } from "../components/Modal/ReviewFormModal";
 
 const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP;
@@ -16,7 +12,6 @@ const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP;
 export const BackdropPoster = ({ movieid }: { movieid: string }) => {
   const { token, isAuthenticated } = useAuth();
   const addWatched = useAddWatchedMutation(token ?? "");
-  const addWantToWatch = useAddWantToWatchMutation(token ?? "");
   const addReview = useAddReviewMutation(token ?? "");
 
   const [toast, setToast] = useState<string | null>(null);
@@ -50,16 +45,30 @@ export const BackdropPoster = ({ movieid }: { movieid: string }) => {
 
   const addToWatchlist = () => {
     if (!isAuthenticated) return showToast("Log in to add");
-    addWatched.mutate(data.id, {
-      onSuccess: () => showToast("Added to watched"),
-    });
+
+    addWatched.mutate(
+      {
+        tmdbId: data.id,
+        watchStatus: "WATCHED",
+      },
+      {
+        onSuccess: () => showToast("Added to watched"),
+      },
+    );
   };
 
   const addToWantToWatch = () => {
     if (!isAuthenticated) return showToast("Log in to add");
-    addWantToWatch.mutate(data.id, {
-      onSuccess: () => showToast("Added to watchlist"),
-    });
+
+    addWatched.mutate(
+      {
+        tmdbId: data.id,
+        watchStatus: "WANT_TO_WATCH",
+      },
+      {
+        onSuccess: () => showToast("Added to watchlist"),
+      },
+    );
   };
 
   const openReviewForm = () => {
