@@ -1,5 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { TmdbMovieDto, TmdbReviewsDto } from "../Types";
+import type {
+  MovieDetailsLogInDto,
+  TmdbMovieDto,
+  TmdbReviewsDto,
+} from "../Types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -47,7 +51,7 @@ export const nowPlayingMoviesQuery = () =>
     },
   });
 
-  export const popularMoviesQuery = () =>
+export const popularMoviesQuery = () =>
   queryOptions({
     queryKey: ["movies", "nowplaying"],
     queryFn: async (): Promise<TmdbMovieDto[]> => {
@@ -91,4 +95,17 @@ export const SimilarMoviesQuery = (id: number) =>
       return data.results;
     },
     enabled: !!id,
+  });
+
+export const movieDetailsLogInQuery = (id: number, token: string) =>
+  queryOptions({
+    queryKey: ["movie", "details", "logged-in", id],
+    queryFn: async (): Promise<MovieDetailsLogInDto> => {
+      const res = await fetch(`${API_BASE_URL}/users/me/movies/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Could not retrieve movie status");
+      return res.json();
+    },
+    enabled: !!id && !!token,
   });
