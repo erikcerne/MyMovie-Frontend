@@ -4,21 +4,27 @@ type ReviewFormModalProps = {
   onClose: () => void;
   onSubmit: (content: string, rating: number) => void;
   isSubmitting: boolean;
+  initialContent?: string | null;
+  initialRating?: number | null;
 };
 
 export function ReviewFormModal({
   onClose,
   onSubmit,
   isSubmitting,
+  initialContent,
+  initialRating,
 }: ReviewFormModalProps) {
-  const [content, setContent] = useState("");
-  const [rating, setRating] = useState(5);
+  const [content, setContent] = useState(initialContent ?? "");
+  const [rating, setRating] = useState(initialRating ?? 5);
+
+  const isUpdating = !!initialContent || !!initialRating;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
       <div className="w-[90%] max-w-md rounded-2xl border border-white/10 bg-black/80 p-8 backdrop-blur-md">
         <h2 className="text-xl font-black uppercase tracking-[-0.02em] text-white">
-          Write a review
+          {isUpdating ? "Update your review" : "Write a review"}
         </h2>
 
         <textarea
@@ -55,7 +61,7 @@ export function ReviewFormModal({
             disabled={isSubmitting || !content.trim()}
             className="flex-1 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white hover:border-primary/40 hover:bg-white/15 active:scale-[0.98] disabled:opacity-40"
           >
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? "Saving..." : isUpdating ? "Update" : "Save"}
           </button>
         </div>
       </div>
