@@ -3,7 +3,13 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import type { AddRatingDto, AddToLibraryDto, AllUserMoviesDto, RegisterUserDto } from "../Types";
+import type {
+  AddRatingDto,
+  AddToLibraryDto,
+  AllUserMoviesDto,
+  RegisterUserDto,
+  WatchStatus,
+} from "../Types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -78,6 +84,80 @@ export const useRegisterUserMutation = (token: string) => {
       if (!res.ok) {
         throw new Error("Could not register username");
       }
+    },
+  });
+};
+
+export const useUpdateStatusMutation = (token: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      tmdbId,
+      watchStatus,
+    }: {
+      tmdbId: number;
+      watchStatus: WatchStatus;
+    }) => {
+      const res = await fetch(
+        `${API_BASE_URL}/users/me/movies/${tmdbId}/status`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(watchStatus),
+        },
+      );
+      if (!res.ok) throw new Error("Could not update status");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+      queryClient.invalidateQueries({
+        queryKey: ["movie", "details", "logged-in"],
+      });
+    },
+  });
+};
+
+export const useUpdateReviewMutation = (token: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (dto: AddRatingDto) => {
+      const res = await fetch(`${API_BASE_URL}/users/me/movies/reviews`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(dto),
+      });
+      if (!res.ok) throw new Error("Could not update review");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+      queryClient.invalidateQueries({
+        queryKey: ["movie", "details", "logged-in"],
+      });
+    },
+  });
+};
+
+export const useDeleteMovieMutation = (token: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (tmdbId: number) => {
+      const res = await fetch(`${API_BASE_URL}/users/me/movies/${tmdbId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Could not remove movie");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+      queryClient.invalidateQueries({
+        queryKey: ["movie", "details", "logged-in"],
+      });
     },
   });
 };
