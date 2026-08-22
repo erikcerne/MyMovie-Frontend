@@ -56,3 +56,10 @@ export type AddToLibraryDto = {
 export type RegisterUserDto = {
   name: string;
 };
+
+export type MovieDetailsLogInDto = {
+  tmdbMovieDto: TmdbMovieDto;
+  watchStatus: WatchStatus | null;
+  content: string | null;
+  rating: number | null;
+};
