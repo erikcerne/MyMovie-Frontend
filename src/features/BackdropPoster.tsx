@@ -4,18 +4,13 @@ import { movieDetailsQuery } from "../api/tmdbMovie";
 import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 import { useAuth } from "../hooks/useAuth";
-import { useAddWatchedMutation, useAddReviewMutation } from "../api/userMovies";
-import { ReviewFormModal } from "../components/Modal/ReviewFormModal";
+import { MovieActionButtons } from "../components/MovieActionButtons"; // Importera din nya komponent
 
 const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP;
 
 export const BackdropPoster = ({ movieid }: { movieid: string }) => {
   const { token, isAuthenticated } = useAuth();
-  const addWatched = useAddWatchedMutation(token ?? "");
-  const addReview = useAddReviewMutation(token ?? "");
-
   const [toast, setToast] = useState<string | null>(null);
-  const [showReviewForm, setShowReviewForm] = useState(false);
 
   const showToast = (message: string) => {
     setToast(message);
@@ -42,39 +37,6 @@ export const BackdropPoster = ({ movieid }: { movieid: string }) => {
       </div>
     );
   }
-
-  const addToWatchlist = () => {
-    if (!isAuthenticated) return showToast("Log in to add");
-
-    addWatched.mutate(
-      {
-        tmdbId: data.id,
-        watchStatus: "WATCHED",
-      },
-      {
-        onSuccess: () => showToast("Added to watched"),
-      },
-    );
-  };
-
-  const addToWantToWatch = () => {
-    if (!isAuthenticated) return showToast("Log in to add");
-
-    addWatched.mutate(
-      {
-        tmdbId: data.id,
-        watchStatus: "WANT_TO_WATCH",
-      },
-      {
-        onSuccess: () => showToast("Added to watchlist"),
-      },
-    );
-  };
-
-  const openReviewForm = () => {
-    if (!isAuthenticated) return showToast("Log in to add");
-    setShowReviewForm(true);
-  };
 
   return (
     <div className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
@@ -109,61 +71,18 @@ export const BackdropPoster = ({ movieid }: { movieid: string }) => {
           {data.overview}
         </p>
 
-        {isAuthenticated ? (
-          <div className="mt-1 flex gap-4">
-            <button
-              type="button"
-              onClick={addToWatchlist}
-              className="flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>Add To Watchlist</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={openReviewForm}
-              className="flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>Add a review</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={addToWantToWatch}
-              className="flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>Want to watch</span>
-            </button>
-          </div>
-        ) : (
-          <p className="mt-1 text-sm text-white/60">
-            Log in to add this movie to your library
-          </p>
-        )}
+        <MovieActionButtons
+          tmdbId={data.id}
+          isAuthenticated={isAuthenticated}
+          token={token}
+          showToast={showToast}
+        />
       </div>
 
       {toast && (
         <div className="fixed bottom-6 left-1/2 z-[60] -translate-x-1/2 rounded-full border border-white/20 bg-black/90 px-6 py-3 text-sm text-white backdrop-blur-md">
           {toast}
         </div>
-      )}
-
-      {showReviewForm && (
-        <ReviewFormModal
-          onClose={() => setShowReviewForm(false)}
-          isSubmitting={addReview.isPending}
-          onSubmit={(content, rating) =>
-            addReview.mutate(
-              { content, rating, tmdbId: data.id },
-              {
-                onSuccess: () => {
-                  setShowReviewForm(false);
-                  showToast("Review saved");
-                },
-              },
-            )
-          }
-        />
       )}
     </div>
   );
