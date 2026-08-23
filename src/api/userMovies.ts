@@ -11,7 +11,7 @@ import type {
   WatchStatus,
 } from "../Types";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 export const allUserMoviesQuery = (token: string) =>
   queryOptions({
@@ -21,7 +21,7 @@ export const allUserMoviesQuery = (token: string) =>
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Could not get youre movies");
-      return res.json();
+      return (await res.json()) as AllUserMoviesDto;
     },
     enabled: !!token,
   });
@@ -112,8 +112,8 @@ export const useUpdateStatusMutation = (token: string) => {
       if (!res.ok) throw new Error("Could not update status");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["usermovies"] });
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+      void queryClient.invalidateQueries({
         queryKey: ["movie", "details", "logged-in"],
       });
     },
@@ -135,8 +135,8 @@ export const useUpdateReviewMutation = (token: string) => {
       if (!res.ok) throw new Error("Could not update review");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["usermovies"] });
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+      void queryClient.invalidateQueries({
         queryKey: ["movie", "details", "logged-in"],
       });
     },
@@ -154,8 +154,8 @@ export const useDeleteMovieMutation = (token: string) => {
       if (!res.ok) throw new Error("Could not remove movie");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["usermovies"] });
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+      void queryClient.invalidateQueries({
         queryKey: ["movie", "details", "logged-in"],
       });
     },
