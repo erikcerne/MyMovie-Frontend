@@ -68,8 +68,8 @@ export const movieDetailsQuery = (id: number) =>
     queryFn: async (): Promise<TmdbMovieDto> => {
       const res = await fetch(`${API_BASE_URL}/movies/${id}`);
       if (!res.ok) throw new Error("Could not retrieve movies");
-      const data = await res.json() as { results: TmdbMovieDto };
-      return data.results;
+      const data = await res.json() as TmdbMovieDto ;
+      return data;
     },
     enabled: !!id,
   });
