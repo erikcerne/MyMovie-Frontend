@@ -54,8 +54,9 @@ export const MovieActionButtons = ({
     );
   }
 
-  const watchStatus = data?.watchStatus;
-  const hasReview = data?.rating !== null || data?.content !== null;
+  const movieTitle = data.tmdbMovieDto.original_title;
+  const watchStatus = data.watchStatus;
+  const hasReview = data.rating !== null || data.content !== null;
 
   const invalidateMovieData = () => {
     void queryClient.invalidateQueries({
@@ -81,7 +82,7 @@ export const MovieActionButtons = ({
       { tmdbId, watchStatus: "WANT_TO_WATCH" },
       {
         onSuccess: () => {
-          showToast("Added to watchlist");
+          showToast("Added to movie library");
           invalidateMovieData();
         },
       },
@@ -109,87 +110,110 @@ export const MovieActionButtons = ({
     });
   };
 
+  const deleteLabel =
+    watchStatus === "WANT_TO_WATCH"
+      ? "Remove from watchlist"
+      : hasReview
+        ? "Remove review"
+        : "Remove from library";
+
   return (
     <>
-      <div className="mt-1 flex flex-wrap gap-4">
-        {watchStatus === null && (
-          <>
-            <button
-              type="button"
-              onClick={handleAddToWatched}
-              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>Add To Watched</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleAddWantToWatch}
-              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>Want to watch</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowReviewForm(true)}
-              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>Add a review</span>
-            </button>
-          </>
-        )}
-
+      <div className="mt-1 flex flex-col gap-2">
         {watchStatus === "WANT_TO_WATCH" && (
-          <>
-            <button
-              type="button"
-              onClick={handleMarkAsWatched}
-              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>Mark as Watched</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowReviewForm(true)}
-              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>{hasReview ? "Update review" : "Add a review"}</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/10 px-6 py-2.5 text-red-200 backdrop-blur-md transition-all duration-200 hover:bg-red-500/20 active:scale-[0.98]"
-            >
-              <span>Remove</span>
-            </button>
-          </>
+          <p className="text-sm text-white/60">
+            {movieTitle} is in your movie library
+          </p>
         )}
 
         {watchStatus === "WATCHED" && (
-          <>
-            <button
-              type="button"
-              onClick={() => setShowReviewForm(true)}
-              className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
-            >
-              <span>{hasReview ? "Update review" : "Add a review"}</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/10 px-6 py-2.5 text-red-200 backdrop-blur-md transition-all duration-200 hover:bg-red-500/20 active:scale-[0.98]"
-            >
-              <span>Remove</span>
-            </button>
-          </>
+          <p className="text-sm text-white/60">
+            {hasReview
+              ? `You have reviewed ${movieTitle}`
+              : `You have watched ${movieTitle}`}
+          </p>
         )}
+
+        <div className="flex flex-wrap gap-4">
+          {watchStatus === null && (
+            <>
+              <button
+                type="button"
+                onClick={() => setShowReviewForm(true)}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span>Add a review</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleAddToWatched}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span>Have Watched</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleAddWantToWatch}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span>Add to Movie Library</span>
+              </button>
+            </>
+          )}
+
+          {watchStatus === "WANT_TO_WATCH" && (
+            <>
+              <button
+                type="button"
+                onClick={() => setShowReviewForm(true)}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span>{hasReview ? "Update review" : "Add a review"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleMarkAsWatched}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span>Have Watched</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/10 px-6 py-2.5 text-red-200 backdrop-blur-md transition-all duration-200 hover:bg-red-500/20 active:scale-[0.98]"
+              >
+                <span>{deleteLabel}</span>
+              </button>
+            </>
+          )}
+
+          {watchStatus === "WATCHED" && (
+            <>
+              <button
+                type="button"
+                onClick={() => setShowReviewForm(true)}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-2.5 text-white backdrop-blur-md transition-all duration-200 hover:border-primary/40 hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span>{hasReview ? "Update review" : "Add a review"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/10 px-6 py-2.5 text-red-200 backdrop-blur-md transition-all duration-200 hover:bg-red-500/20 active:scale-[0.98]"
+              >
+                <span>{deleteLabel}</span>
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       {showReviewForm && (
         <ReviewFormModal
           onClose={() => setShowReviewForm(false)}
           isSubmitting={addReview.isPending || updateReview.isPending}
-          initialContent={data?.content}
-          initialRating={data?.rating}
+          initialContent={data.content}
+          initialRating={data.rating}
           onSubmit={(content, rating) => {
             const payload = { content, rating, tmdbId };
             const options = {
