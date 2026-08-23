@@ -11,7 +11,7 @@ import { Reviews } from "../features/Reviews";
 export const Route = createFileRoute("/movie/$movieId")({
   component: RouteComponent,
 });
-
+// eslint-disable-next-line react-refresh/only-export-components
 function RouteComponent() {
   const { movieId }: { movieId: string } = Route.useParams();
   const movieIdNumber = Number(movieId);
