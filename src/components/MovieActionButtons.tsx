@@ -58,10 +58,10 @@ export const MovieActionButtons = ({
   const hasReview = data?.rating !== null || data?.content !== null;
 
   const invalidateMovieData = () => {
-    queryClient.invalidateQueries({
+    void queryClient.invalidateQueries({
       queryKey: ["movie", "details", "logged-in", tmdbId],
     });
-    queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+    void queryClient.invalidateQueries({ queryKey: ["usermovies"] });
   };
 
   const handleAddToWatched = () => {

@@ -93,7 +93,7 @@ export const Header = () => {
         ) : (
           <button
             type="button"
-            onClick={() => login()}
+            onClick={() => void login()}
             className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
           >
             <svg
@@ -118,14 +118,14 @@ export const Header = () => {
           <>
             <button
               type="button"
-              onClick={() => login()}
+              onClick={() => void login()}
               className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
             >
               <span className="font-medium">Login</span>
             </button>
             <button
               type="button"
-              onClick={() => signup()}
+              onClick={() => void signup()}
               className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
             >
               <span className="font-medium">Signup</span>
@@ -134,7 +134,7 @@ export const Header = () => {
         ) : (
           <button
             type="button"
-            onClick={() => logout()}
+            onClick={() => void logout()}
             className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-base-content transition-all duration-200 hover:bg-base-200 hover:text-primary"
           >
             <span className="font-medium">Logout</span>

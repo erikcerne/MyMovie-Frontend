@@ -4,9 +4,9 @@ import { movieDetailsQuery } from "../api/tmdbMovie";
 import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 import { useAuth } from "../hooks/useAuth";
-import { MovieActionButtons } from "../components/MovieActionButtons"; // Importera din nya komponent
+import { MovieActionButtons } from "../components/MovieActionButtons"; 
 
-const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP;
+const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP as string;
 
 export const BackdropPoster = ({ movieid }: { movieid: string }) => {
   const { token, isAuthenticated } = useAuth();

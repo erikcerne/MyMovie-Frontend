@@ -12,9 +12,8 @@ export const Route = createFileRoute("/movie/$movieId")({
   component: RouteComponent,
 });
 
-// eslint-disable-next-line react-refresh/only-export-components
 function RouteComponent() {
-  const { movieId } = Route.useParams();
+  const { movieId }: { movieId: string } = Route.useParams();
   const movieIdNumber = Number(movieId);
   const [activeTab, setActiveTab] = useState<"Similar Movies" | "Reviews">(
     "Similar Movies",
