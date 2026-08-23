@@ -106,8 +106,8 @@ export const movieDetailsLogInQuery = (id: number, token: string) =>
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Could not retrieve movie status");
-      const data = await res.json() as { results: MovieDetailsLogInDto };
-      return data.results;
+      const data = await res.json() as MovieDetailsLogInDto ;
+      return data;
     },
     enabled: !!id && !!token,
   });
