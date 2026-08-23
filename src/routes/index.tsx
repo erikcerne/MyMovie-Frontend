@@ -7,7 +7,7 @@ import {
   popularMoviesQuery,
   topRatedMoviesQuery,
   upcomingMoviesQuery,
-} from "../api/tmdbMovie";
+} from "../api/TmdbMovie";
 import { FullMovieBord } from "../features/FullMovieBord";
 import { Footer } from "../components/Footer";
 

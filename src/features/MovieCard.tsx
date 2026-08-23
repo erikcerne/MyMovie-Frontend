@@ -1,7 +1,7 @@
 import { Star } from "../components/Star";
 import type { TmdbMovieDto } from "../Types";
 
-const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_POSTER;
+const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_POSTER as string;
 
 
 export const MovieCard = ({ movie }: { movie: TmdbMovieDto }) => {

@@ -70,7 +70,7 @@ export const MovieBord = ({ title, queryFn }: MovieBordProps) => {
           ref={scrollRef}
           className="flex scroll-smooth overflow-x-hidden gap-4 pb-4 px-4 sm:px-0"
         >
-          {(data as TmdbMovieDto[]).map((movie) => (
+          {(data).map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>

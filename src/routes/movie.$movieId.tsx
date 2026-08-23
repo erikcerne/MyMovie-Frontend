@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BackdropPoster } from "../features/BackdropPoster";
-import { movieReviewsQuery, SimilarMoviesQuery } from "../api/tmdbMovie";
+import { movieReviewsQuery, SimilarMoviesQuery } from "../api/TmdbMovie";
 import { useQuery } from "@tanstack/react-query";
 import type { TmdbMovieDto } from "../Types";
 import { MovieCard } from "../features/MovieCard";
@@ -12,9 +12,8 @@ export const Route = createFileRoute("/movie/$movieId")({
   component: RouteComponent,
 });
 
-// eslint-disable-next-line react-refresh/only-export-components
 function RouteComponent() {
-  const { movieId } = Route.useParams();
+  const { movieId }: { movieId: string } = Route.useParams();
   const movieIdNumber = Number(movieId);
   const [activeTab, setActiveTab] = useState<"Similar Movies" | "Reviews">(
     "Similar Movies",

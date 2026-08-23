@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { movieDetailsLogInQuery } from "../api/tmdbMovie";
+import { movieDetailsLogInQuery } from "../api/TmdbMovie";
 import {
   useAddWatchedMutation,
   useUpdateStatusMutation,
@@ -58,10 +58,10 @@ export const MovieActionButtons = ({
   const hasReview = data?.rating !== null || data?.content !== null;
 
   const invalidateMovieData = () => {
-    queryClient.invalidateQueries({
+    void queryClient.invalidateQueries({
       queryKey: ["movie", "details", "logged-in", tmdbId],
     });
-    queryClient.invalidateQueries({ queryKey: ["usermovies"] });
+    void queryClient.invalidateQueries({ queryKey: ["usermovies"] });
   };
 
   const handleAddToWatched = () => {

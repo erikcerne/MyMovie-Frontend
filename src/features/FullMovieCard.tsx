@@ -2,7 +2,7 @@ import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 import type { TmdbMovieDto } from "../Types";
 
-const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP;
+const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP as string;
 
 export const FullMovieCard = ({ movie }: { movie: TmdbMovieDto }) => {
   return (
