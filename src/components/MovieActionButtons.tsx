@@ -26,7 +26,6 @@ export const MovieActionButtons = ({
   const [showReviewForm, setShowReviewForm] = useState(false);
   const queryClient = useQueryClient();
 
-  // Mutations
   const addWatched = useAddWatchedMutation(token ?? "");
   const updateStatus = useUpdateStatusMutation(token ?? "");
   const addReview = useAddReviewMutation(token ?? "");
