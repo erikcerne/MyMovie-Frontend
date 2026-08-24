@@ -9,23 +9,24 @@ import {
   useDeleteMovieMutation,
 } from "../api/userMovies";
 import { ReviewFormModal } from "../components/Modal/ReviewFormModal";
+import type { TmdbMovieDetailsDto } from "../Types";
 
 type MovieActionButtonsProps = {
-  tmdbId: number;
+  movieDetails: TmdbMovieDetailsDto;
   isAuthenticated: boolean;
   token: string | null;
   showToast: (message: string) => void;
 };
 
 export const MovieActionButtons = ({
-  tmdbId,
+  movieDetails,
   isAuthenticated,
   token,
   showToast,
 }: MovieActionButtonsProps) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const queryClient = useQueryClient();
-
+  const tmdbId = movieDetails.id;
   const addWatched = useAddWatchedMutation(token ?? "");
   const updateStatus = useUpdateStatusMutation(token ?? "");
   const addReview = useAddReviewMutation(token ?? "");
@@ -36,11 +37,21 @@ export const MovieActionButtons = ({
     movieDetailsLogInQuery(tmdbId, token ?? ""),
   );
 
-  if (!isAuthenticated) return null;
-
-  if (isPending) {
+  // Vissar meddelande för utloggade användare med en snygg "chip"-design
+  if (!isAuthenticated) {
     return (
-      <div className="mt-1 flex gap-4">
+      <div className="mt-6">
+        <p className="inline-block rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-white/80 shadow-sm backdrop-blur-md">
+          Login to add movies to your library
+        </p>
+      </div>
+    );
+  }
+
+  // Laddningsstate som tar upp ungefär samma utrymme för att undvika hopp
+  if (isPending || !data) {
+    return (
+      <div className="mt-4 flex min-h-[60px] items-center gap-4">
         <span className="loading loading-spinner loading-sm text-white/60"></span>
       </div>
     );
@@ -48,13 +59,13 @@ export const MovieActionButtons = ({
 
   if (isError) {
     return (
-      <p className="mt-1 text-sm text-red-400">
+      <p className="mt-4 text-sm text-red-400">
         Failed to load library status.
       </p>
     );
   }
 
-  const movieTitle = data.tmdbMovieDto.original_title;
+  const movieTitle = movieDetails.original_title;
   const watchStatus = data.watchStatus;
   const hasReview = data.rating !== null || data.content !== null;
 
@@ -119,22 +130,24 @@ export const MovieActionButtons = ({
 
   return (
     <>
-      <div className="mt-1 flex flex-col gap-2">
-        {watchStatus === "WANT_TO_WATCH" && (
-          <p className="text-sm text-white/60">
-            {movieTitle} is in your movie library
-          </p>
-        )}
+      {/* Ändrade till mt-4 för att ge knapparna lite mer andrum neråt från filmbeskrivningen */}
+      <div className="mt-4 flex flex-col gap-3">
+        
+        {/* FAST HÖJD HÄR (min-h-[20px]) löser problemet med knappar som hoppar */}
+        <div className="flex min-h-[20px] items-center text-sm font-medium text-white/80">
+          {watchStatus === "WANT_TO_WATCH" && (
+            <span>{movieTitle} is in your movie library</span>
+          )}
+          {watchStatus === "WATCHED" && (
+            <span>
+              {hasReview
+                ? `You have reviewed ${movieTitle}`
+                : `You have watched ${movieTitle}`}
+            </span>
+          )}
+        </div>
 
-        {watchStatus === "WATCHED" && (
-          <p className="text-sm text-white/60">
-            {hasReview
-              ? `You have reviewed ${movieTitle}`
-              : `You have watched ${movieTitle}`}
-          </p>
-        )}
-
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-3">
           {watchStatus === null && (
             <>
               <button
