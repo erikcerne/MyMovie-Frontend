@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import type {
   MovieDetailsLogInDto,
+  TmdbMovieDetailsDto,
   TmdbMovieDto,
   TmdbReviewsDto,
 } from "../Types";
@@ -65,10 +66,10 @@ export const popularMoviesQuery = () =>
 export const movieDetailsQuery = (id: number) =>
   queryOptions({
     queryKey: ["movie", "details", id],
-    queryFn: async (): Promise<TmdbMovieDto> => {
+    queryFn: async (): Promise<TmdbMovieDetailsDto> => {
       const res = await fetch(`${API_BASE_URL}/movies/${id}`);
       if (!res.ok) throw new Error("Could not retrieve movies");
-      const data = await res.json() as TmdbMovieDto ;
+      const data = await res.json() as TmdbMovieDetailsDto ;
       return data;
     },
     enabled: !!id,
@@ -102,7 +103,7 @@ export const movieDetailsLogInQuery = (id: number, token: string) =>
   queryOptions({
     queryKey: ["movie", "details", "logged-in", id],
     queryFn: async (): Promise<MovieDetailsLogInDto> => {
-      const res = await fetch(`${API_BASE_URL}/users/me/movies/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/users/me/movies/status/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Could not retrieve movie status");
