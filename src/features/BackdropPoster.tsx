@@ -4,7 +4,7 @@ import { movieDetailsQuery } from "../api/TmdbMovie";
 import { Header } from "../components/Header";
 import { Star } from "../components/Star";
 import { useAuth } from "../hooks/useAuth";
-import { MovieActionButtons } from "../components/MovieActionButtons"; 
+import { MovieActionButtons } from "../components/MovieActionButtons";
 
 const TMDB_IMAGE_BASE_URL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL_BACKDROP as string;
 
@@ -65,6 +65,16 @@ export const BackdropPoster = ({ movieid }: { movieid: string }) => {
           <span className="text-white/30" aria-hidden="true">
             ·
           </span>
+          <div className="flex flex-wrap gap-2">
+            {data?.genres?.map((genre) => (
+              <span
+                key={genre.id}
+                className="px-2.5 py-0.5 rounded-full bg-white/10 text-white/90 text-xs border border-white/20 shadow-sm"
+              >
+                {genre.name}
+              </span>
+            ))}
+          </div>
         </div>
 
         <p className="mt-4 line-clamp-3 max-w-xl text-sm text-white/90 md:text-base">
@@ -72,7 +82,7 @@ export const BackdropPoster = ({ movieid }: { movieid: string }) => {
         </p>
 
         <MovieActionButtons
-          tmdbId={data.id}
+          movieDetails={data}
           isAuthenticated={isAuthenticated}
           token={token}
           showToast={showToast}
