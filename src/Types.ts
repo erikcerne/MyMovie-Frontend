@@ -58,8 +58,23 @@ export type RegisterUserDto = {
 };
 
 export type MovieDetailsLogInDto = {
-  tmdbMovieDto: TmdbMovieDto;
   watchStatus: WatchStatus | null;
   content: string | null;
   rating: number | null;
 };
+
+export type TmdbMovieDetailsDto = {
+  id: number;
+  original_title: string;
+  overview: string;
+  backdrop_path: string | null;
+  poster_path: string | null;
+  release_date: string;
+  vote_average: number;
+  genres: genres[];
+};
+
+export type genres = {
+  id: number;
+  name: string;
+}
