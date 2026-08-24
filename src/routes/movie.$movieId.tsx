@@ -26,7 +26,6 @@ function RouteComponent() {
     <>
       <BackdropPoster movieid={movieId} />
       <div className="mx-auto w-[75%] mt-5 mb-5">
-        {" "}
         <div className="inline-flex w-fit items-center rounded-full bg-base-200 p-1.5">
           <button
             type="button"
